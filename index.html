@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>MxBox</title>
+	<link rel="stylesheet" href="css/MxBox.css">
+	<style>
+		.mx-content{
+			width: 80%;
+			max-width: 400px;
+			margin: 20px auto;
+		}
+		.mx-content img{
+			width: 100%;
+			margin: 10px;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="mx-content">
+		<img src="img/img1.jpg" alt="">
+		<img src="img/img2.jpg" alt="">
+		<img src="img/img3.jpg" alt="">
+		<img src="img/img4.jpg" alt="">
+		<img src="img/img5.jpg" alt="">
+	</div>
+	
+	<script src="js/jquery-1.11.3.js"></script>
+	<script src="js/MxBox.js"></script>
+	<script>
+		$( document ).ready( function(){
+			$( '.mx-content' ).MxBox();
+
+		} );
+	</script>
+</body>
+</html>

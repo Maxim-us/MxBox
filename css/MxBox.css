@@ -1,0 +1,29 @@
+/*-------------------------
+*      Styles Box
+--------------------------*/
+.MxBox{
+	position: fixed;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	background-color: rgba(0, 0, 0, 0.85);
+}
+.MxBoxWindow{
+	position: absolute;
+	display: table;
+	top: 0px;
+}
+.MxImg{
+	width: 100%;
+	height: auto;
+}
+.MxBoxClose{
+	position: absolute;
+	top: 20px;
+	right: 50px;
+	width: 20px;
+	height: 20px;
+	background-color: #fff;
+	cursor: pointer;
+}
