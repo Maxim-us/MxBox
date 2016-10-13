@@ -67,11 +67,9 @@
 						thisImg.src = srcImg;
 
 						ImgNativWidth = thisImg.width;
-						ImgNativHeight = thisImg.height;
+						ImgNativHeight = thisImg.height;											
 
-						//console.log( ImgNativWidth );						
-
-						subtracting = ScreenWidth - ScreenHeight;
+						subtracting = ImgWidth - ImgHeight;
 
 						BoxWidth = '';
 						BoxHeight = '';
@@ -79,7 +77,36 @@
 						BoxMarginLeft = '';
 						
 						if( subtracting < 0 ){ //vertical
-												
+
+							if( ImgNativHeight < ScreenHeight ){								
+
+								BoxMarginTop = ImgNativHeight / 2;
+								BoxMarginTop = '-' + BoxMarginTop + 'px';
+								BoxMarginLeft = ImgNativWidth / 2;
+								BoxMarginLeft = '-' + BoxMarginLeft + 'px';
+								BoxWidth = ImgNativWidth + 'px';
+								BoxHeight = ImgNativHeight + 'px';								
+
+							} else{
+								subScreenHeight = parseInt( ScreenHeight * 90 / 100 );	
+
+								subHeight = ImgNativHeight - subScreenHeight;
+								percentExcess = parseInt( subHeight * 100 / ImgNativHeight ); //
+
+								newHeightBox = parseInt( ImgNativHeight * percentExcess / 100 );
+								newHeightBox = ImgNativHeight - newHeightBox;
+
+								newWidthBox = parseInt( ImgNativWidth * percentExcess / 100 );
+								newWidthBox = ImgNativWidth - newWidthBox;
+
+								console.log( newWidthBox );
+
+								
+
+
+
+							}
+							
 
 						} else{ //horizontal
 							if( ImgNativWidth < ScreenWidth ){
@@ -89,23 +116,20 @@
 								BoxMarginTop = '-' + BoxMarginTop + 'px';
 								BoxMarginLeft = ImgNativWidth / 2;
 								BoxMarginLeft = '-' + BoxMarginLeft + 'px';								
-							} else{
+							} else{								
 								
-								// Find 90% for screen
 								subScreenWidth = parseInt( ScreenWidth * 70 / 100 );
 
-								var subWidth = ImgNativWidth - subScreenWidth; //sub px
+								subWidth = ImgNativWidth - subScreenWidth; //sub px
 
-								var percentExcess = parseInt( subWidth * 100 / ImgNativWidth ); // This percent take with side img
+								percentExcess = parseInt( subWidth * 100 / ImgNativWidth ); // This percent take with side img
 								
-								var newWidthBox = parseInt( ImgNativWidth * percentExcess / 100 );
+								newWidthBox = parseInt( ImgNativWidth * percentExcess / 100 );
 								newWidthBox = ImgNativWidth - newWidthBox;
 
-								var newHeightBox = parseInt( ImgNativHeight * percentExcess / 100 );
+								newHeightBox = parseInt( ImgNativHeight * percentExcess / 100 );
 								newHeightBox = ImgNativHeight - newHeightBox;
-								
-								console.log(newWidthBox);
-							
+																							
 								BoxWidth = newWidthBox;
 								BoxHeight = 'auto';
 								BoxMarginTop = newHeightBox / 2;
