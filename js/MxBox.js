@@ -1,11 +1,11 @@
 ;( function( $ ){
 
-	$.default = {
-
+	$.defaultSett = {
+		'gallery': true
 	};
 
 	$.fn.MxBox = function( params ){
-		var settings = $.extend( {}, $.default, params );
+		var settings = $.extend( {}, $.defaultSett, params );
 		BoxPerform( this, settings );
 	};
 
@@ -28,8 +28,15 @@
 					$( '<div class="MxBoxWindow"></div>' ).appendTo( '.MxBox' );
 					$( '<img src="" class="MxImg">' ).appendTo( '.MxBoxWindow' );
 					$( '<div class="MxBoxClose"></div>' ).appendTo( '.MxBox' );
-					$( '<div class="MxBoxNext"></div>' ).appendTo( '.MxBox' );
-					$( '<div class="MxBoxPrev"></div>' ).appendTo( '.MxBox' );
+
+					if( settings.gallery == true ){
+						$( '<div class="MxBoxNext"></div>' ).appendTo( '.MxBox' );
+						$( '<div class="MxBoxPrev"></div>' ).appendTo( '.MxBox' );
+					}					
+				},
+
+				countImage: function(){
+					countImg = $( '.' + rootClass + ' img' ).length;
 				},
 
 				/* Initialised */
@@ -209,20 +216,55 @@
 				$( '.MxBoxWindow' ).attr( 'style', '' );
 			}
 
+			/* next */
+			function NextImg(){
+				_thisImg = $( '.MxImg' ).attr( 'src' );
+				$( '.' + rootClass + ' img' ).each( function(){
+					if( $( this ).attr( 'src' ) == _thisImg ){
+
+						indexImg = $( this ).index() + 1;
+
+						if( indexImg >= countImg ){
+							indexImg = 0
+						}
+						CloseImg();
+						OpenImg( $( '.' + rootClass + ' img' ).eq( indexImg ) );
+					}
+				} );
+			}
+
+			/* prev */
+			function PrevImg(){
+				_thisImg = $( '.MxImg' ).attr( 'src' );
+				$( '.' + rootClass + ' img' ).each( function(){
+					if( $( this ).attr( 'src' ) == _thisImg ){
+
+						indexImg = $( this ).index() - 1;
+
+						if( indexImg < 0 ){
+							indexImg = countImg - 1;
+						}
+						CloseImg();
+						OpenImg( $( '.' + rootClass + ' img' ).eq( indexImg ) );
+					}
+				} );	
+			}
+
 
 			/* ---------------------------------------------
 			*                  Events
 			----------------------------------------------*/
-			var keyTarget = false;
-			var	BoxEvents = {
+			var
+			keyTarget = false,
+			countImg = $( '.' + rootClass + ' img' ).length,
+			BoxEvents = {
 				
 				openBox: function(){					
 					$( '.' + rootClass + ' img' ).on( 'click', function(){
 						OpenImg( $( this ) );
 						setTimeout( function(){
 							keyTarget = true;
-						},500 );
-						
+						},500 );						
 					});					
 				},
 
@@ -245,18 +287,33 @@
 					} );
 				},
 
+				nextImg: function(){
+					$( '.MxBoxNext' ).on( 'click', function(){
+						NextImg();						
+					} );
+				},
+
+				prevImg: function(){
+					$( '.MxBoxPrev' ).on( 'click', function(){
+						PrevImg();			
+					} );
+				},
+
 				// 
 				contr: function(){
 					// Open
 					this.openBox();
 					// Close
 					this.closeBox();
+					// Next img
+					this.nextImg();
+					// Prev img
+					this.prevImg();
 				}
 						
 			}
 
 			BoxEvents.contr();
-
 	}
 
 } )( jQuery );
