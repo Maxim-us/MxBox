@@ -1,7 +1,8 @@
 ;( function( $ ){
 
 	$.defaultSett = {
-		'gallery': true
+		'gallery': true,
+		'descImg': true
 	};
 
 	$.fn.MxBox = function( params ){
@@ -32,7 +33,11 @@
 					if( settings.gallery == true ){
 						$( '<div class="MxBoxNext"></div>' ).appendTo( '.MxBox' );
 						$( '<div class="MxBoxPrev"></div>' ).appendTo( '.MxBox' );
-					}					
+					}
+
+					if( settings.descImg == true ){
+						$( '<div class="descImg"></div>' ).appendTo( '.MxBoxWindow' );
+					}				
 				},
 
 				countImage: function(){
@@ -50,7 +55,6 @@
 
 			createWrap.init();
 
-
 			/* ---------------------------------------------
 			*                  functions
 			----------------------------------------------*/
@@ -62,6 +66,8 @@
 
 				srcImg = _this.attr( 'src' );
 				$( '.MxImg' ).attr( 'src', srcImg );
+
+				DescriptionImg( _this );
 
 				ScreenWidth = $( window ).width();
 				ScreenHeight = $( window ).height();
@@ -194,7 +200,6 @@
 							BoxMarginLeft = '-' + BoxMarginLeft + 'px';
 
 						}
-
 					}
 				}
 
@@ -229,6 +234,7 @@
 						}
 						CloseImg();
 						OpenImg( $( '.' + rootClass + ' img' ).eq( indexImg ) );
+						
 					}
 				} );
 			}
@@ -250,6 +256,16 @@
 				} );	
 			}
 
+			/* display description */
+			function DescriptionImg( _this ){
+				var descImage = _this.attr( 'title' );
+				if( typeof descImage === 'undefined'){
+					$( '.descImg' ).css( 'display', 'none' );					
+				} else{
+					$( '.descImg' ).css( 'display', 'block' );
+					$( '.descImg' ).text( descImage );
+				}				
+			}
 
 			/* ---------------------------------------------
 			*                  Events
@@ -262,9 +278,16 @@
 				openBox: function(){					
 					$( '.' + rootClass + ' img' ).on( 'click', function(){
 						OpenImg( $( this ) );
+						DescriptionImg( $( this ) );
+
 						setTimeout( function(){
 							keyTarget = true;
-						},500 );						
+						},500 );
+
+						if( countImg <= 1 ){
+							$( '.MxBoxPrev' ).css( 'display', 'none' );
+							$( '.MxBoxNext' ).css( 'display', 'none' );
+						}					
 					});					
 				},
 
@@ -289,7 +312,7 @@
 
 				nextImg: function(){
 					$( '.MxBoxNext' ).on( 'click', function(){
-						NextImg();						
+						NextImg();											
 					} );
 				},
 

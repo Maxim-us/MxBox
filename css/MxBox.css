@@ -43,3 +43,11 @@
 .MxBoxNext{
 	right: 0px;
 }
+
+.descImg{
+	position: absolute;
+	max-width: 80%;
+	background-color: rgba(197, 194, 186, 0.75);
+	bottom: 20px;
+	padding: 10px;
+}
