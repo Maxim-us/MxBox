@@ -1,20 +1,20 @@
+﻿MX-BOX – popup на jQuery для открытия изображений.
+
+ОПИСАНИЕ:
+Плагин подключается к блоку с изображениями. Все дочерние изображения будут открываться скриптом.
+
+СВОЙСТВА:
+- легкий;
+- адаптивный;
+- простые настройки.
+
+ПОДКЛЮЧЕНИЕ:
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>MxBox</title>
 	<link rel="stylesheet" href="css/MxBox.css">
-	<style>
-		.mx-content{
-			width: 80%;
-			max-width: 400px;
-			margin: 20px auto;
-		}
-		.mx-content img{
-			width: 100%;
-			margin: 10px;
-		}
-	</style>
 </head>
 <body>
 
@@ -36,3 +36,13 @@
 	</script>
 </body>
 </html>
+
+НАСТРОЙКА:
+<script>
+	$( document ).ready( function(){
+			$( '.mx-content' ).MxBox( {
+				'gallery': false, // отключить возможность проматывать изображения
+				'descImg': false // отключить описание изображений
+			} );
+		} );
+</script>
