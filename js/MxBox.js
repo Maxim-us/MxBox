@@ -33,6 +33,8 @@
 					if( settings.gallery == true ){
 						$( '<div class="MxBoxNext"></div>' ).appendTo( '.MxBox' );
 						$( '<div class="MxBoxPrev"></div>' ).appendTo( '.MxBox' );
+						$( '<div class="MxBoxArrow"></div>' ).appendTo( '.MxBoxNext' );
+						$( '<div class="MxBoxArrow"></div>' ).appendTo( '.MxBoxPrev' );
 					}
 
 					if( settings.descImg == true ){
@@ -41,7 +43,11 @@
 				},
 
 				countImage: function(){
-					countImg = $( '.' + rootClass + ' img' ).length;
+					countImg = $( '.' + rootClass + ' img' ).length;					
+				},
+
+				cursorPoint: function(){
+					$( '.' + rootClass + ' img' ).css( 'cursor', 'pointer' );
 				},
 
 				/* Initialised */
@@ -50,6 +56,8 @@
 					this.createBox();
 					// Get Class wrapper
 					this.getClass();
+					// Cursor pointer for images
+					this.cursorPoint();
 				}
 			};
 
@@ -157,49 +165,25 @@
 
 					} else{
 
-						if( ImgNativHeight < ScreenHeight ){
+						subScreenWidth = parseInt( ScreenWidth * 65 / 100 );
 
-							subScreenWidth = parseInt( ScreenWidth * 65 / 100 );
+						subWidth = ImgNativWidth - subScreenWidth; //sub px
 
-							subWidth = ImgNativWidth - subScreenWidth; //sub px
-
-							percentExcess = parseInt( subWidth * 100 / ImgNativWidth ); // This percent take with side img
-							
-							newWidthBox = parseInt( ImgNativWidth * percentExcess / 100 );
-							newWidthBox = ImgNativWidth - newWidthBox;
-
-							newHeightBox = parseInt( ImgNativHeight * percentExcess / 100 );
-							newHeightBox = ImgNativHeight - newHeightBox;
-																						
-							BoxWidth = newWidthBox;
-							BoxHeight = 'auto';
-							BoxMarginTop = newHeightBox / 2;
-							BoxMarginTop = '-' + BoxMarginTop + 'px';
-							BoxMarginLeft = newWidthBox / 2;
-							BoxMarginLeft = '-' + BoxMarginLeft + 'px';
+						percentExcess = parseInt( subWidth * 100 / ImgNativWidth ); // This percent take with side img
 						
-						} else{
+						newWidthBox = parseInt( ImgNativWidth * percentExcess / 100 );
+						newWidthBox = ImgNativWidth - newWidthBox;
 
-							subScreenWidth = parseInt( ScreenWidth * 65 / 100 );
+						newHeightBox = parseInt( ImgNativHeight * percentExcess / 100 );
+						newHeightBox = ImgNativHeight - newHeightBox;
+																					
+						BoxWidth = newWidthBox;
+						BoxHeight = 'auto';
+						BoxMarginTop = newHeightBox / 2;
+						BoxMarginTop = '-' + BoxMarginTop + 'px';
+						BoxMarginLeft = newWidthBox / 2;
+						BoxMarginLeft = '-' + BoxMarginLeft + 'px';
 
-							subWidth = ImgNativWidth - subScreenWidth; //sub px
-
-							percentExcess = parseInt( subWidth * 100 / ImgNativWidth ); // This percent take with side img
-							
-							newWidthBox = parseInt( ImgNativWidth * percentExcess / 100 );
-							newWidthBox = ImgNativWidth - newWidthBox;
-
-							newHeightBox = parseInt( ImgNativHeight * percentExcess / 100 );
-							newHeightBox = ImgNativHeight - newHeightBox;
-																						
-							BoxWidth = newWidthBox;
-							BoxHeight = 'auto';
-							BoxMarginTop = newHeightBox / 2;
-							BoxMarginTop = '-' + BoxMarginTop + 'px';
-							BoxMarginLeft = newWidthBox / 2;
-							BoxMarginLeft = '-' + BoxMarginLeft + 'px';
-
-						}
 					}
 				}
 
@@ -211,6 +195,41 @@
 					'left': '50%',
 					'margin-left': BoxMarginLeft
 				} );
+
+				var corectHeightImg = $( '.MxBoxWindow' ).height();
+							
+				if( corectHeightImg > ScreenHeight ){
+					
+					subScreenHeight = parseInt( ScreenHeight * 90 / 100 );	
+
+					subHeight = ImgNativHeight - subScreenHeight;
+					percentExcess = parseInt( subHeight * 100 / ImgNativHeight ); //
+
+					newHeightBox = parseInt( ImgNativHeight * percentExcess / 100 );
+					newHeightBox = ImgNativHeight - newHeightBox;
+
+					newWidthBox = parseInt( ImgNativWidth * percentExcess / 100 );
+					newWidthBox = ImgNativWidth - newWidthBox;
+
+					BoxWidth = newWidthBox;
+					BoxHeight = newHeightBox;
+					BoxMarginTop = newHeightBox / 2;
+					BoxMarginTop = '-' + BoxMarginTop + 'px';
+					BoxMarginLeft = newWidthBox / 2;
+					BoxMarginLeft = '-' + BoxMarginLeft + 'px';
+
+					$( '.MxBoxWindow' ).css( {
+						'width': BoxWidth,
+						'height': BoxHeight,
+						'top':'50%',
+						'margin-top': BoxMarginTop,
+						'left': '50%',
+						'margin-left': BoxMarginLeft
+					} );
+
+					//console.log( 'Resize big' );
+
+				}
 
 			}
 
@@ -233,10 +252,9 @@
 							indexImg = 0
 						}
 						CloseImg();
-						OpenImg( $( '.' + rootClass + ' img' ).eq( indexImg ) );
-						
+						OpenImg( $( '.' + rootClass + ' img' ).eq( indexImg ) );						
 					}
-				} );
+				} );				
 			}
 
 			/* prev */
@@ -311,12 +329,22 @@
 				},
 
 				nextImg: function(){
+					$( '.MxBoxNext' ).hover( function(){
+						$( '.MxBoxNext .MxBoxArrow' ).animate( { 'margin-right': '40px' },300 );
+					}, function(){
+						$( '.MxBoxNext .MxBoxArrow' ).animate( { 'margin-right': '-40px' },300 );
+					} );	
 					$( '.MxBoxNext' ).on( 'click', function(){
-						NextImg();											
+						NextImg();															
 					} );
 				},
 
 				prevImg: function(){
+					$( '.MxBoxPrev' ).hover( function(){
+						$( '.MxBoxPrev .MxBoxArrow' ).animate( { 'margin-left': '40px' },300 );
+					}, function(){
+						$( '.MxBoxPrev .MxBoxArrow' ).animate( { 'margin-left': '-40px' },300 );
+					} );	
 					$( '.MxBoxPrev' ).on( 'click', function(){
 						PrevImg();			
 					} );

@@ -8,7 +8,7 @@
 	height: 100%;
 	top: 0px;
 	background-color: rgba(0, 0, 0, 0.85);
-	margin-left: -10px;
+	margin-left: -10px;	
 }
 .MxBoxWindow{
 	position: absolute;
@@ -27,6 +27,7 @@
 	height: 20px;
 	background-color: #fff;
 	cursor: pointer;
+	z-index: 777;
 }
 
 .MxBoxPrev, .MxBoxNext{
@@ -35,13 +36,27 @@
 	height: 200px;
 	top: 50%;
 	margin-top: -100px;
-	background-color: #fff;
+	overflow: hidden;
 }
 .MxBoxPrev{
 	left: 0px;
 }
 .MxBoxNext{
 	right: 0px;
+}
+.MxBoxArrow{
+	width: 20px;
+	height: 30px;
+	background-color: #000;
+	margin-top: 85px;
+	cursor: pointer;
+}
+.MxBoxNext .MxBoxArrow{
+	float: right;
+	margin-right: -40px;
+}
+.MxBoxPrev .MxBoxArrow{
+	margin-left: -40px;
 }
 
 .descImg{
