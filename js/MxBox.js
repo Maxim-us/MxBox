@@ -6,7 +6,7 @@
 * #    Project name: MX-BOX                         #
 * #    E-mail: markomaksym@gmail.com                #
 * X    Date of creation: 15.10.2016                 X
-* #    Last Modified:                               #
+* #    Last Modified: 17.10.2016                    #
 * #                                                 #
 * ###################################################
 */
@@ -40,7 +40,7 @@
 				createBox: function(){
 					$( '<div class="MxBox"></div>' ).appendTo( 'body' );
 					$( '<div class="MxBoxWindow"></div>' ).appendTo( '.MxBox' );
-					$( '<img src="" class="MxImg">' ).appendTo( '.MxBoxWindow' );
+					$( '<img src="" class="MxImg" data-item="">' ).appendTo( '.MxBoxWindow' );
 					$( '<div class="MxBoxClose"></div>' ).appendTo( '.MxBox' );
 
 					if( settings.gallery == true ){
@@ -55,8 +55,13 @@
 					}				
 				},
 
-				countImage: function(){
+				dataImage: function(){
 					countImg = $( '.' + rootClass + ' img' ).length;
+					var dataItem = 1;
+					$( '.' + rootClass + ' img' ).each( function(){
+						$( this ).attr( 'data-item', dataItem );
+						dataItem++;
+					} );
 				},
 
 				cursorPoint: function(){
@@ -69,6 +74,8 @@
 					this.createBox();
 					// Get Class wrapper
 					this.getClass();
+					//
+					this.dataImage();
 					// Cursor pointer for images
 					this.cursorPoint();
 				}
@@ -82,6 +89,8 @@
 
 			/* open */
 			function OpenImg( _this ){
+
+				$( 'body' ).css( 'overflow', 'hidden' );
 
 				$( '.MxBox' ).css( 'display', 'block' );
 
@@ -288,6 +297,8 @@
 			/* close */
 			function CloseImg(){
 
+				$( 'body' ).css( 'overflow', 'auto' );
+
 				$( '.MxBox' ).css( 'display', 'none' );
 				$( '.MxImg' ).attr( 'src', '' );
 				$( '.MxBoxWindow' ).attr( 'style', '' );
@@ -301,13 +312,14 @@
 				$( '.' + rootClass + ' img' ).each( function(){
 					if( $( this ).attr( 'src' ) == _thisImg ){
 
-						indexImg = $( this ).index() + 1;
+						indexImg = $( this ).attr( 'data-item' );
 
 						if( indexImg >= countImg ){
 							indexImg = 0
 						}
 						CloseImg();
 						OpenImg( $( '.' + rootClass + ' img' ).eq( indexImg ) );
+
 					}
 				} );
 
@@ -320,13 +332,14 @@
 				$( '.' + rootClass + ' img' ).each( function(){
 					if( $( this ).attr( 'src' ) == _thisImg ){
 
-						indexImg = $( this ).index() - 1;
+						indexImg = $( this ).attr( 'data-item' ) - 2;
 
 						if( indexImg < 0 ){
 							indexImg = countImg - 1;
 						}
 						CloseImg();
 						OpenImg( $( '.' + rootClass + ' img' ).eq( indexImg ) );
+
 					}
 				} );
 
